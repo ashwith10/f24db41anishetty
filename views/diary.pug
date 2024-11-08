@@ -1,0 +1,31 @@
+extends layout
+ 
+block content
+  h1= title
+  h1 Ashwith Sai Anishetty
+  // Unbuffered code block to define results array
+  -
+    let results = [
+      { diary_name: 'Travel Diary', author: 'Alice', year: 2018 },
+      { diary_name: 'Nature Observations', author: 'Bob', year: 2020 },
+      { diary_name: 'Recipe Book', author: 'Carla', year: 2015 }
+    ];
+ 
+  // Container for Bootstrap grid
+  .container-fluid
+    .row
+      // Loop through each item in the results array with index
+      each diary, index in results
+        .col-sm-2
+          h3 #{diary.diary_name}
+          p author: #{diary.author}
+          p year: #{diary.year}$
+ 
+          // Button that calls buy() function with the index of the diary
+          button(type="button", class="btn btn-outline-success", onclick=`buy(${index +1})`) Purchase
+ 
+  // Script to define the buy() function
+  script.
+    function buy(index) {
+      alert(`You purchased item ${index}`);
+    }
