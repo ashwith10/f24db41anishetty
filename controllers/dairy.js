@@ -1,8 +1,19 @@
 var dairy = require('../models/dairy');
 // List of all Costumes
-exports.dairy_list = function(req, res) {
-res.send('NOT IMPLEMENTED: Costume list');
-};
+// exports.dairy_list = function(req, res) {
+// res.send('NOT IMPLEMENTED: Costume list');
+// };
+exports.dairy_list = async function(req, res) {
+    try{
+    thedairy = await dairy.find();
+    res.send(thedairy);
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+    };
+    
 // for a specific Costume.
 exports.dairy_detail = function(req, res) {
 res.send('NOT IMPLEMENTED: dairy detail: ' + req.params.id);
