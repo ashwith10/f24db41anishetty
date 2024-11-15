@@ -17,13 +17,8 @@ router.put('/diary/:id', diary_controller.diary_update_put);
 router.get('/diary/:id', diary_controller.diary_detail);
 // GET request for list of all diary items.
 router.get('/diary', diary_controller.diary_list);
+// GET request for one diary.
+router.get('/diary/:id', diary_controller.diary_detail);
 module.exports = router;
-// // API for our resources
-// exports.api = function(req, res) {
-// res.write('[');
-// res.write('{"resource":"diary", ');
-// res.write(' "verbs":["GET","PUT", "DELETE"] ');
-// res.write('}');
-// res.write(']')
-// res.send();
-// };
+ 
+ 

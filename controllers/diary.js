@@ -4,7 +4,7 @@ var diary = require('../models/diary');
 // res.send('NOT IMPLEMENTED: diary list');
 // };
  
-// List of all Costumes
+// List of all diarys
 exports.diary_list = async function(req, res) {
     try{
     thediarys = await diary.find();
@@ -18,9 +18,9 @@ exports.diary_list = async function(req, res) {
  
  
 // for a specific diary.
-exports.diary_detail = function(req, res) {
-res.send('NOT IMPLEMENTED: diary detail: ' + req.params.id);
-};
+// exports.diary_detail = function(req, res) {
+// res.send('NOT IMPLEMENTED: diary detail: ' + req.params.id);
+// };
 // Handle diary create on POST.
 exports.diary_create_post = function(req, res) {
 res.send('NOT IMPLEMENTED: diary create POST');
@@ -30,9 +30,9 @@ exports.diary_delete = function(req, res) {
 res.send('NOT IMPLEMENTED: diary delete DELETE ' + req.params.id);
 };
 // Handle diary update form on PUT.
-exports.diary_update_put = function(req, res) {
-res.send('NOT IMPLEMENTED: diary update PUT' + req.params.id);
-};
+// exports.diary_update_put = function(req, res) {
+// res.send('NOT IMPLEMENTED: diary update PUT' + req.params.id);
+// };
 // VIEWS
 // Handle a show all view
 exports.diary_view_all_Page = async function(req, res) {
@@ -46,7 +46,7 @@ exports.diary_view_all_Page = async function(req, res) {
     }
     };
  
-    // Handle Costume create on POST.
+    // Handle diary create on POST.
 exports.diary_create_post = async function(req, res) {
     console.log(req.body)
     let document = new diary();
@@ -63,4 +63,65 @@ exports.diary_create_post = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
     };
-    
+   
+   
+// for a specific diary.
+exports.diary_detail = async function(req, res) {
+console.log("detail" + req.params.id)
+try {
+result = await diary.findById( req.params.id)
+res.send(result)
+} catch (error) {
+res.status(500)
+res.send(`{"error": document for id ${req.params.id} not found`);
+}
+};
+ 
+// // Handle diary update form on PUT.
+// exports.diary_update_put = async function(req, res) {
+// console.log(`update on id ${req.params.id} with body
+// ${JSON.stringify(req.body)}`)
+// try {
+// let toUpdate = await diary.findById( req.params.id)
+// // Do updates of properties
+// if(req.body.diary_type)
+// toUpdate.diary_type = req.body.diary_type;
+// if(req.body.cost) toUpdate.cost = req.body.cost;
+// if(req.body.size) toUpdate.size = req.body.size;
+// let result = await toUpdate.save();
+// console.log("Sucess " + result)
+// res.send(result)
+// } catch (err) {
+// res.status(500)
+// res.send(`{"error": ${err}: Update for id ${req.params.id}
+// failed`);
+// }
+// };
+// if(req.body.checkboxsale) toUpdate.sale = true;
+// else toUpdate.sale= false;
+ 
+// Handle diary update form on PUT.
+exports.diary_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`); // Log request details
+    try {
+        // Find the diary by ID
+        let toUpdate = await diary.findById(req.params.id);
+ 
+        // Update the diary properties if they are provided in the request body
+        if (req.body.diary_name) toUpdate.diary_name = req.body.diary_name;
+        if (req.body.author) toUpdate.author= req.body.author;
+        if (req.body.year) toUpdate.year = req.body.year;
+        if (req.body.checkboxsale) toUpdate.sale = true;
+        else toUpdate.sale = false;
+ 
+        // Save the updated document
+        let result = await toUpdate.save();
+        console.log("Success " + result);
+        res.send(result); // Send the updated document as JSON
+    } catch (err) {
+        res.status(500); // Internal server error status code
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed}`);
+    }
+};
+ 
+   
