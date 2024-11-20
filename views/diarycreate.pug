@@ -1,0 +1,35 @@
+extends layout
+block content
+  h1= title
+  form(id='diaryForm', action="/resource/diary", method="POST")
+    div.form-group
+      label.diaryAttr(for='diary_name') diary name
+      input#diary_type(type='text', name='diary_name')
+    div.form-group
+      label.diaryAttr(for='author') diary author
+      input#size(type='text', name='author')
+    div.form-group
+      label.diaryAttr(for='year') diary year
+      input#cost(type='number', name='year')
+    input(type="submit")
+
+  script.
+    document.forms['diaryForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO: Do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      })
+      .then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      })
+      .then((body) => {
+        alert("Save succeeded");
+        // TODO: Handle body
+      })
+      .catch((error) => {
+        // TODO: Handle error
+        alert("Save failed: " + error);
+      });
+    });

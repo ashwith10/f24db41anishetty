@@ -123,5 +123,81 @@ exports.diary_update_put = async function(req, res) {
         res.send(`{"error": ${err}: Update for id ${req.params.id} failed}`);
     }
 };
+
+// Handle diary delete on DELETE.
+exports.diary_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await diary.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+    };
+
+    // Handle a show one view with id specified by query
+exports.diary_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await diary.findById( req.query.id)
+    res.render('diarydetail',
+    { title: 'diary Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+
+    // Handle building the view for creating a diary.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.diary_create_Page = function(req, res) {
+    console.log("create view")
+    try{
+    res.render('diarycreate', { title: 'diary Create'});
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+
+
+    // Handle building the view for updating a diary.
+// query provides the id
+exports.diary_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+    let result = await diary.findById(req.query.id)
+    res.render('diaryupdate', { title: 'diary Update', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+
+    // Handle a delete one view with id from query
+exports.diary_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+    result = await diary.findById(req.query.id)
+    res.render('diarydelete', { title: 'diary Delete', toShow:
+    result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+   
+    
+    
+    
  
    
+
+    

@@ -1,0 +1,23 @@
+extends layout
+ 
+block content
+  h1= title
+  - let diary_id = toShow._id
+  - let diary_name = toShow.diary_name
+  - let author   = toShow.author
+  - let year  = toShow.year 
+ 
+  div
+    div.row
+      div(class='diaryAttr mr-3') diary ID is:
+      div #{diary_id}
+    div.row
+      div(class='diaryAttr mr-3') diary name is:
+      div #{diary_name}
+    div.row
+      div(class='diaryAttr mr-3') diary author  is:
+      div #{author}
+    div.row
+      div(class='diaryAttr mr-3') diary year  is:
+      div #{year}
+ 
