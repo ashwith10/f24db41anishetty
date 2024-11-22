@@ -1,38 +1,64 @@
-extends layout
+//- extends layout
  
-block content
-  h1= title
-  h1 Ashwith Sai Anishetty
+//- block content
+//-   h1= title
+//-   h1 Ashwith Sai Anishetty
  
  
-  -
-    var results = [
-      {diary_name: 'Travel Diary', author: 'Alice', year: 2018 },
-      {diary_name: 'Nature Observations',author: 'Bob', year: 2020 },
-      {diary_name: 'Recipe Book', author: 'Carla', yea: 2015 }
-    ];
+//-   -
+//-     var results = [
+//-       {diary_name: 'Travel Diary', author: 'Alice', year: 2018 },
+//-       {diary_name: 'Nature Observations',author: 'Bob', year: 2020 },
+//-       {diary_name: 'Recipe Book', author: 'Carla', yea: 2015 }
+//-     ];
 
-  .container-fluid
+//-   .container-fluid
  
-    .row
-      each diary, index  in results
-        .col-sm-2
-          h3 #{diary.diary_name}
-          p Type: #{diary.author}
-          p Year Made: #{diary.year}
+//-     .row
+//-       each diary, index  in results
+//-         .col-sm-2
+//-           h3 id: #{index._id}
+//-           h3 #{diary.diary_name}
+//-           p Type: #{diary.author}
+//-           p Year Made: #{diary.year}
  
-           // Button that calls buy() function with the index of the diary
-          button(type="button", class="btn btn-outline-success", onclick=`buy(${index +1})`) Purchase
- 
-  // Script to define the buy() function
-  script.
-    function buy(index) {
-      alert(`You purchased item ${index}`);
-    }
-    var express = require('express');
+//-            // Button that calls buy() function with the index of the diary
+//-           button(type="button", class="btn btn-outline-success", onclick=`buy(${index +1})`) Purchase
+//-           button(type="button", class="btn btn-primary ml-1", onclick=`dispatch('/diary/update?id=${index._id}')`) Update 
+//-           //button.btn.btn-primary.ml-1(onclick=`dispatch('/diary/update?id=${diary._id}')`) Update
+//-   // Script to define the buy() function
+//-   script.
+//-     function dispatch(path){
+//-       console.log(path);
+//-       window.location.href=path
+//-     }
+//-     function buy(index) {
+//-       alert(`You purchased item ${index}`);
+//-     }
+//-     var express = require('express');
 
     
 
 
+extends layout
  
- 
+block content
+    h1= title
+    - let items = results;
+   
+    div.container-fluid
+        div.row
+            each item,x in items
+                div.row-sm-2.m-1
+                    p Item #{item.diary_name} (#{item.author}) is #{item.year}
+                    button.btn.btn-primary.ml-1(onclick=`dispatch('/diary/update?id=${item._id}')`) Update
+                    //button.btn.btn-primary.ml-1(onclick=`dispatch('/diary/update?id=${item._id}')`) Update
+                    button(type="button", class="btn btn-outline-success", onclick=`buy(${ x+1})`) Purchase
+   
+    script.
+        function dispatch(path) {
+            window.location.href = path;
+        }
+        function buy(index) {
+            alert(`You purchased item ${index}`);
+        }

@@ -4,13 +4,13 @@ block content
   form(id='diaryForm', action="/resource/diary", method="POST")
     div.form-group
       label.diaryAttr(for='diary_name') diary name
-      input#diary_type(type='text', name='diary_name')
+      input#diary_name(type='text', name='diary_name')
     div.form-group
       label.diaryAttr(for='author') diary author
-      input#size(type='text', name='author')
+      input#author(type='text', name='author')
     div.form-group
       label.diaryAttr(for='year') diary year
-      input#cost(type='number', name='year')
+      input#year(type='number', name='year')
     input(type="submit")
 
   script.
