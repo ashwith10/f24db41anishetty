@@ -1,6 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var diary_controllers = require('../controllers/diary');
+// A little function to check if we have an authorized user and continue on
+// redirect to login.
+const secured = (req, res, next) => {
+if (req.user){
+return next();
+}
+res.redirect("/login");
+}
  
 /* GET home page. */
 router.get('/',diary_controllers.diary_view_all_Page);
@@ -12,10 +20,13 @@ router.get('/detail',diary_controllers.diary_view_one_Page);
 router.get('/create', diary_controllers.diary_create_Page);
 
 /* GET create update page */
-router.get('/update', diary_controllers.diary_update_Page);
+router.get('/update',secured, diary_controllers.diary_update_Page);
 
 /* GET delete diary page */
 router.get('/delete', diary_controllers.diary_delete_Page);
+
+
+
 
 
  
